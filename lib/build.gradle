@@ -1,0 +1,57 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.9'
+    }
+}
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "29.0.0"
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:support-annotations:28.0.0'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.14.2'
+}
+
+publish {
+    userOrg = 'darklycoder'
+    groupId = 'com.darklycoder.lib'
+    artifactId = 'DownloadManager'
+    publishVersion = '1.0.0'
+    desc = 'Android 下载框架'
+    website = 'https://github.com/DarklyCoder/DownloadManager'
+}
