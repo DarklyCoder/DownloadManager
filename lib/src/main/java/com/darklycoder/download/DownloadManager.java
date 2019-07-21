@@ -18,6 +18,11 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 下载管理器
+ *
+ * 目前提供单个下载、批量下载实现
+ *
+ * TODO 1、判断是否重复；2、支持多线程下载；3、支持暂停、恢复、移除下载；4、支持自定义header
+ *
  */
 public final class DownloadManager {
 
@@ -43,6 +48,9 @@ public final class DownloadManager {
         return DownloadUtilsInner.instance;
     }
 
+    /**
+     * 设置配置
+     */
     public void setConfig(DownloadConfig config) {
         if (null != config) {
             mConfig = config;

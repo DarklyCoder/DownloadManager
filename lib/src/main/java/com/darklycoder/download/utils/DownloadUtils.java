@@ -2,16 +2,18 @@ package com.darklycoder.download.utils;
 
 import com.darklycoder.download.info.DownloadConfig;
 import com.darklycoder.download.info.TaskCellInfo;
+import com.darklycoder.download.interfaces.IProgress;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.BufferedSink;
+import okio.BufferedSource;
+import okio.Okio;
 
 /**
  * 下载工具
@@ -35,14 +37,15 @@ class DownloadUtils {
     /**
      * 下载
      */
-    public boolean download(TaskCellInfo info, DownloadConfig config) {
+    public boolean download(TaskCellInfo info, DownloadConfig config, IProgress listener) {
         boolean success = false;
 
         try {
-            File file = new File(info.path, info.name);
-            if (file.exists()) {
+            if (info.isFileExists()) {
                 return true;
             }
+
+            File file = new File(info.path, info.name);
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
@@ -67,19 +70,14 @@ class DownloadUtils {
                 return false;
             }
 
-            InputStream is = null;
-            FileOutputStream fos = null;
+            BufferedSink sink = null;
+            BufferedSource source = null;
 
             try {
-                is = responseBody.byteStream();
-                fos = new FileOutputStream(fileTmp);
-
-                byte[] buffer = new byte[1024 * 4];
-                int len;
-                while ((len = is.read(buffer)) != -1) {
-                    fos.write(buffer, 0, len);
-                }
-                fos.flush();
+                ProgressResponseBody prb = new ProgressResponseBody(responseBody, listener);
+                sink = Okio.buffer(Okio.sink(fileTmp));
+                source = Okio.buffer(prb.source());
+                sink.writeAll(source);
 
                 if (fileTmp.renameTo(file)) {
                     // 下载成功
@@ -87,7 +85,7 @@ class DownloadUtils {
                 }
 
             } finally {
-                IOUtil.closeAll(is, fos);
+                IOUtil.closeAll(source, sink);
             }
 
         } catch (Exception ignored) {
