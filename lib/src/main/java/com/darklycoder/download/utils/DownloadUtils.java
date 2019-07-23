@@ -18,7 +18,7 @@ import okio.Okio;
 /**
  * 下载工具
  */
-class DownloadUtils {
+public class DownloadUtils {
 
     private OkHttpClient mOkHttpClient;
 
@@ -30,7 +30,7 @@ class DownloadUtils {
         static DownloadUtils instance = new DownloadUtils();
     }
 
-    static DownloadUtils getInstance() {
+    public static DownloadUtils getInstance() {
         return DownloadUtils.DownloadUtilsInner.instance;
     }
 

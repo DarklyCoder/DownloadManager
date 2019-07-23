@@ -90,7 +90,9 @@ public class ProgressResponseBody extends ResponseBody {
                 // 回调，如果contentLength()不知道长度，会返回-1
 
                 if (-1 != bytesRead) {
-                    progressListener.onProgress(totalBytesRead * 1F / totalBytes);
+                    if (null != progressListener) {
+                        progressListener.onProgress(totalBytesRead * 1F / totalBytes);
+                    }
                 }
 
                 return bytesRead;

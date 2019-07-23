@@ -5,8 +5,10 @@ import com.darklycoder.download.info.TaskCellInfo;
 import com.darklycoder.download.info.TaskInfo;
 import com.darklycoder.download.info.TaskStatusInfo;
 import com.darklycoder.download.interfaces.ICellTaskListener;
+import com.darklycoder.download.interfaces.IProgress;
 import com.darklycoder.download.interfaces.IStatusListener;
 import com.darklycoder.download.utils.DownloadTask;
+import com.darklycoder.download.utils.DownloadUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,11 +20,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 下载管理器
- *
+ * <p>
  * 目前提供单个下载、批量下载实现
- *
+ * <p>
  * TODO 1、判断是否重复；2、支持多线程下载；3、支持暂停、恢复、移除下载；4、支持自定义header
- *
  */
 public final class DownloadManager {
 
@@ -55,6 +56,13 @@ public final class DownloadManager {
         if (null != config) {
             mConfig = config;
         }
+    }
+
+    /**
+     * 同步下载单个任务
+     */
+    public boolean synDowload(TaskCellInfo info, IProgress listener) {
+        return DownloadUtils.getInstance().download(info, mConfig, listener);
     }
 
     /**
