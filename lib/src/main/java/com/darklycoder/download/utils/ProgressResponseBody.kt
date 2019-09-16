@@ -6,7 +6,7 @@ import okhttp3.ResponseBody
 import okio.*
 import java.io.IOException
 
-/**
+/*
  * 显示下载进度
  */
 class ProgressResponseBody(
@@ -20,7 +20,7 @@ class ProgressResponseBody(
     // 包装完成的BufferedSource
     private var bufferedSource: BufferedSource? = null
 
-    /**
+    /*
      * 重写调用实际的响应体的contentType
      *
      * @return MediaType
@@ -29,7 +29,7 @@ class ProgressResponseBody(
         return responseBody.contentType()
     }
 
-    /**
+    /*
      * 重写调用实际的响应体的contentLength
      *
      * @return contentLength
@@ -38,7 +38,7 @@ class ProgressResponseBody(
         return responseBody.contentLength()
     }
 
-    /**
+    /*
      * 重写进行包装source
      *
      * @return BufferedSource
@@ -52,7 +52,7 @@ class ProgressResponseBody(
         return bufferedSource
     }
 
-    /**
+    /*
      * 读取，回调进度接口
      *
      * @param source Source

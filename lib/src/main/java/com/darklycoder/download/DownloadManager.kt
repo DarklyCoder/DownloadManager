@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 import kotlin.math.min
 
-/**
+/*
  * 下载管理器
  *
  *
@@ -37,7 +37,7 @@ object DownloadManager {
     private val lock = Any()
     private var mConfig = DownloadConfig()
 
-    /**
+    /*
      * 设置配置
      */
     fun setConfig(config: DownloadConfig?) {
@@ -46,14 +46,14 @@ object DownloadManager {
         }
     }
 
-    /**
+    /*
      * 同步下载单个任务
      */
     fun synDowload(info: TaskCellInfo, listener: IProgress): Boolean {
         return DownloadUtils.download(info, mConfig, listener)
     }
 
-    /**
+    /*
      * 单个下载
      *
      * @param info     单个下载
@@ -63,7 +63,7 @@ object DownloadManager {
         download(TaskInfo(listOf(info)), listener)
     }
 
-    /**
+    /*
      * 批量下载
      *
      * @param taskInfo 下载任务
@@ -82,7 +82,7 @@ object DownloadManager {
         }
     }
 
-    /**
+    /*
      * 处理等待队列
      */
     private fun handlePrepare() {
@@ -106,7 +106,7 @@ object DownloadManager {
         }
     }
 
-    /**
+    /*
      * 下载监听
      */
     private val cellTaskListener = object : ICellTaskListener {

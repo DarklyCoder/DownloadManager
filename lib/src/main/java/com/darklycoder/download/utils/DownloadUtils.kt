@@ -10,14 +10,14 @@ import okio.BufferedSource
 import okio.Okio
 import java.io.File
 
-/**
+/*
  * 下载工具
  */
 object DownloadUtils {
 
     private val mOkHttpClient: OkHttpClient = OkHttpClient()
 
-    /**
+    /*
      * 下载
      */
     fun download(info: TaskCellInfo, config: DownloadConfig, listener: IProgress): Boolean {

@@ -5,7 +5,7 @@ import com.darklycoder.download.info.TaskCellInfo
 import com.darklycoder.download.interfaces.ICellTaskListener
 import com.darklycoder.download.interfaces.IProgress
 
-/**
+/*
  * 下载任务
  */
 class DownloadTask(
