@@ -1,13 +1,13 @@
-package com.darklycoder.download.interfaces;
+package com.darklycoder.download.interfaces
 
-import android.support.annotation.FloatRange;
+import androidx.annotation.FloatRange
 
-import com.darklycoder.download.info.TaskCellInfo;
+import com.darklycoder.download.info.TaskCellInfo
 
 /**
  * 下载状态监听
  */
-public interface IStatusListener {
+interface IStatusListener {
 
     /**
      * 单个下载任务进度回调
@@ -15,21 +15,21 @@ public interface IStatusListener {
      * @param info     下载任务
      * @param progress 相对进度
      */
-    void onCellProgress(TaskCellInfo info, @FloatRange(from = 0F, to = 1F) float progress);
+    fun onCellProgress(info: TaskCellInfo, @FloatRange(from = 0.0, to = 1.0) progress: Float)
 
     /**
      * 单个下载成功
      *
      * @param info 下载任务
      */
-    void onCellSuccess(TaskCellInfo info);
+    fun onCellSuccess(info: TaskCellInfo)
 
     /**
      * 单个下载失败
      *
      * @param info 下载任务
      */
-    void onCellFail(TaskCellInfo info);
+    fun onCellFail(info: TaskCellInfo)
 
     /**
      * 总体下载进度回调
@@ -39,6 +39,6 @@ public interface IStatusListener {
      * @param successCount 成功个数
      * @param failCount    失败次数
      */
-    void onTotalProgress(@FloatRange(from = 0F, to = 1F) float progress, long count, long successCount, long failCount);
+    fun onTotalProgress(@FloatRange(from = 0.0, to = 1.0) progress: Float, count: Long, successCount: Long, failCount: Long)
 
 }

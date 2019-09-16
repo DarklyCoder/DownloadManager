@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.novoda.bintray-release'
 
 buildscript {
@@ -6,19 +8,18 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.novoda:bintray-release:0.9'
+        classpath 'com.novoda:bintray-release:0.9.1'
     }
 }
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "29.0.0"
+    compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 3
-        versionName "1.0.2"
+        minSdkVersion 14
+        targetSdkVersion 29
+        versionCode 4
+        versionName "2.0.0"
     }
 
     buildTypes {
@@ -42,7 +43,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.core:core-ktx:1.1.0"
+    implementation 'androidx.annotation:annotation:1.1.0'
 
     implementation 'com.squareup.okhttp3:okhttp:3.14.2'
 }
@@ -51,7 +54,7 @@ publish {
     userOrg = 'darklycoder'
     groupId = 'com.darklycoder.lib'
     artifactId = 'DownloadManager'
-    publishVersion = '1.0.2'
+    publishVersion = '2.0.0'
     desc = 'Android 下载框架'
     website = 'https://github.com/DarklyCoder/DownloadManager'
 }
