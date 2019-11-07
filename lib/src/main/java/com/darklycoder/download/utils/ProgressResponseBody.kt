@@ -13,7 +13,7 @@ class ProgressResponseBody(
         // 实际的待包装响应体
         private val responseBody: ResponseBody,
         // 进度回调接口
-        private val progressListener: IProgress?
+        private val progressListener: IProgress? = null
 
 ) : ResponseBody() {
 

@@ -20,7 +20,7 @@ object DownloadUtils {
     /**
      * 下载
      */
-    fun download(info: TaskCellInfo, config: DownloadConfig, listener: IProgress): Boolean {
+    fun download(info: TaskCellInfo, config: DownloadConfig, listener: IProgress? = null): Boolean {
         var success = false
 
         try {

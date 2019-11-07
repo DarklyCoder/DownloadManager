@@ -50,8 +50,9 @@ object DownloadManager {
     /**
      * 同步下载单个任务
      */
+    @JvmOverloads
     @JvmStatic
-    fun synDowload(info: TaskCellInfo, listener: IProgress): Boolean {
+    fun synDowload(info: TaskCellInfo, listener: IProgress? = null): Boolean {
         return DownloadUtils.download(info, mConfig, listener)
     }
 
@@ -61,8 +62,9 @@ object DownloadManager {
      * @param info     单个下载
      * @param listener 下载状态监听
      */
+    @JvmOverloads
     @JvmStatic
-    fun download(info: TaskCellInfo, listener: IStatusListener) {
+    fun download(info: TaskCellInfo, listener: IStatusListener? = null) {
         download(TaskInfo(listOf(info)), listener)
     }
 
@@ -72,8 +74,9 @@ object DownloadManager {
      * @param taskInfo 下载任务
      * @param listener 下载状态监听
      */
+    @JvmOverloads
     @JvmStatic
-    fun download(taskInfo: TaskInfo, listener: IStatusListener) {
+    fun download(taskInfo: TaskInfo, listener: IStatusListener? = null) {
         val count = taskInfo.count
         if (count <= 0) {
             return

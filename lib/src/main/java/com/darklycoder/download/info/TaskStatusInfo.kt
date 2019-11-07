@@ -14,7 +14,7 @@ class TaskStatusInfo(
         // 总数
         private val count: Long,
         // 回调
-        private val listener: IStatusListener?
+        private val listener: IStatusListener? = null
 ) {
 
     // 成功个数
