@@ -2,7 +2,7 @@ package com.darklycoder.download.info
 
 import com.darklycoder.download.interfaces.IStatusListener
 
-/*
+/**
  * 下载任务状态信息
  *
  * <pre>
@@ -22,13 +22,13 @@ class TaskStatusInfo(
     // 失败个数
     private var failCount: Long = 0
 
-    /*
+    /**
      * 是否全部执行完毕
      */
     val isComplete: Boolean
         get() = count == successCount + failCount
 
-    /*
+    /**
      * 获取整体下载进度
      */
     private val progress: Float

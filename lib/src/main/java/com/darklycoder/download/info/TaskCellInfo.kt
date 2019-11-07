@@ -2,7 +2,7 @@ package com.darklycoder.download.info
 
 import java.io.File
 
-/*
+/**
  * 单个下载任务信息
  */
 data class TaskCellInfo(
@@ -14,13 +14,13 @@ data class TaskCellInfo(
         var name: String
 ) {
 
-    /*
+    /**
      * 获取文件本地地址
      */
     val filePath: String
         get() = path + File.separator + name
 
-    /*
+    /**
      * 文件是否存在
      */
     val isFileExists: Boolean

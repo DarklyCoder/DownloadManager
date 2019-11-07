@@ -18,8 +18,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 29
-        versionCode 4
-        versionName "2.0.0"
+        versionCode 6
+        versionName "2.0.2"
     }
 
     buildTypes {
@@ -54,7 +54,7 @@ publish {
     userOrg = 'darklycoder'
     groupId = 'com.darklycoder.lib'
     artifactId = 'DownloadManager'
-    publishVersion = '2.0.0'
+    publishVersion = '2.0.2'
     desc = 'Android 下载框架'
     website = 'https://github.com/DarklyCoder/DownloadManager'
 }

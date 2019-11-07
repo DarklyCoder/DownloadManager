@@ -1,6 +1,6 @@
 package com.darklycoder.download.info
 
-/*
+/**
  * 下载任务信息
  */
 data class TaskInfo(

@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 import kotlin.math.min
 
-/*
+/**
  * 下载管理器
  *
  *
@@ -26,49 +26,53 @@ import kotlin.math.min
  */
 object DownloadManager {
 
-    // 最大线程数目
-    private const val MAX_POOL_SIZE = 40
     // 等待队列
     private val TASK_PREPARE = Collections.synchronizedList(ArrayList<Runnable>())
     // 下载任务线程池
-    private val POOL_TASK = ThreadPoolExecutor(0, MAX_POOL_SIZE, 30, TimeUnit.MILLISECONDS, SynchronousQueue()) { r, _ -> TASK_PREPARE.add(r) }
+    private lateinit var POOL_TASK: ThreadPoolExecutor
     // 记录批次任务信息，存放下载任务监听
     private val mStatusList = LinkedHashMap<Long, TaskStatusInfo>()
     private val lock = Any()
     private var mConfig = DownloadConfig()
 
-    /*
+    /**
      * 设置配置
      */
+    @JvmStatic
     fun setConfig(config: DownloadConfig?) {
         if (null != config) {
             mConfig = config
         }
+
+        POOL_TASK = ThreadPoolExecutor(0, mConfig.maxPoolSize, 30, TimeUnit.MILLISECONDS, SynchronousQueue()) { r, _ -> TASK_PREPARE.add(r) }
     }
 
-    /*
+    /**
      * 同步下载单个任务
      */
+    @JvmStatic
     fun synDowload(info: TaskCellInfo, listener: IProgress): Boolean {
         return DownloadUtils.download(info, mConfig, listener)
     }
 
-    /*
+    /**
      * 单个下载
      *
      * @param info     单个下载
      * @param listener 下载状态监听
      */
+    @JvmStatic
     fun download(info: TaskCellInfo, listener: IStatusListener) {
         download(TaskInfo(listOf(info)), listener)
     }
 
-    /*
+    /**
      * 批量下载
      *
      * @param taskInfo 下载任务
      * @param listener 下载状态监听
      */
+    @JvmStatic
     fun download(taskInfo: TaskInfo, listener: IStatusListener) {
         val count = taskInfo.count
         if (count <= 0) {
@@ -82,18 +86,18 @@ object DownloadManager {
         }
     }
 
-    /*
+    /**
      * 处理等待队列
      */
     private fun handlePrepare() {
         val size = TASK_PREPARE.size
         val activeCount = POOL_TASK.activeCount
 
-        if (activeCount < MAX_POOL_SIZE && size > 0) {
+        if (activeCount < mConfig.maxPoolSize && size > 0) {
             val runnableList = ArrayList<Runnable>()
 
             // 取出拒绝队列中的任务
-            val minSize = min(size, MAX_POOL_SIZE - activeCount)
+            val minSize = min(size, mConfig.maxPoolSize - activeCount)
             for (i in 0 until minSize) {
                 runnableList.add(TASK_PREPARE[i])
             }
@@ -106,7 +110,7 @@ object DownloadManager {
         }
     }
 
-    /*
+    /**
      * 下载监听
      */
     private val cellTaskListener = object : ICellTaskListener {
