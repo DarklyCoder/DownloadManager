@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, info.name + "下载失败！")
         }
 
-        override fun onTotalProgress(progress: Float, count: Long, successCount: Long, failCount: Long) {
+        override fun onTotalProgress(progress: Float, count: Int, successCount: Int, failCount: Int) {
             runOnUiThread { tv_desc?.text = "当前下载进度：$progress" }
         }
     }

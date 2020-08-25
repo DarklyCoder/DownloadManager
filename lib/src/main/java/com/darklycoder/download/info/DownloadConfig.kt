@@ -10,14 +10,23 @@ import java.io.File
 class DownloadConfig {
 
     /**
+     * 核心线程池大小
+     */
+    var corePoolSize = 1
+
+    /**
      * 线程池大小
      */
-    var maxPoolSize = 40
+    var maxPoolSize = 10
 
     /**
      * 临时的下载目录
      */
     var tmpPath = downloadTmpPath
+
+    init {
+        maxPoolSize = Runtime.getRuntime().availableProcessors() + 1
+    }
 
     private val downloadTmpPath: String
         get() = Environment.getExternalStorageDirectory().absolutePath + File.separator + ".downloadTmp"

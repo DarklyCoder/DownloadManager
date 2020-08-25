@@ -12,15 +12,15 @@ import com.darklycoder.download.interfaces.IStatusListener
  */
 class TaskStatusInfo(
         // 总数
-        private val count: Long,
+        private val count: Int,
         // 回调
         private val listener: IStatusListener? = null
 ) {
 
     // 成功个数
-    private var successCount: Long = 0
+    private var successCount: Int = 0
     // 失败个数
-    private var failCount: Long = 0
+    private var failCount: Int = 0
 
     /**
      * 是否全部执行完毕

@@ -1,16 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.novoda.bintray-release'
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.novoda:bintray-release:0.9.1'
-    }
-}
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 29
@@ -44,17 +35,31 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.core:core-ktx:1.1.0"
+    implementation "androidx.core:core-ktx:1.3.1"
     implementation 'androidx.annotation:annotation:1.1.0'
 
     implementation 'com.squareup.okhttp3:okhttp:3.14.2'
 }
 
-publish {
-    userOrg = 'darklycoder'
-    groupId = 'com.darklycoder.lib'
-    artifactId = 'DownloadManager'
-    publishVersion = '2.0.3'
-    desc = 'Android 下载框架'
-    website = 'https://github.com/DarklyCoder/DownloadManager'
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.darklycoder.lib'
+                artifactId = 'DownloadManager'
+                version = '2.0.4'
+            }
+        }
+    }
 }
+
+//    publish {
+//        userOrg = 'darklycoder'
+//        groupId = 'com.darklycoder.lib'
+//        artifactId = 'DownloadManager'
+//        publishVersion = '2.0.3'
+//        desc = 'Android 下载框架'
+//        website = 'https://github.com/DarklyCoder/DownloadManager'
+//    }

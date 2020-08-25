@@ -16,20 +16,16 @@ import java.util.concurrent.TimeUnit
 import kotlin.math.min
 
 /**
- * 下载管理器
- *
- *
- * 目前提供单个下载、批量下载实现
- *
- *
- * TODO 1、判断是否重复；2、支持多线程下载；3、支持暂停、恢复、移除下载；4、支持自定义header
+ * 下载管理器，简单提供单个下载、批量下载实现
  */
 object DownloadManager {
 
     // 等待队列
     private val TASK_PREPARE = Collections.synchronizedList(ArrayList<Runnable>())
+
     // 下载任务线程池
     private lateinit var POOL_TASK: ThreadPoolExecutor
+
     // 记录批次任务信息，存放下载任务监听
     private val mStatusList = LinkedHashMap<Long, TaskStatusInfo>()
     private val lock = Any()
@@ -44,15 +40,16 @@ object DownloadManager {
             mConfig = config
         }
 
-        POOL_TASK = ThreadPoolExecutor(0, mConfig.maxPoolSize, 30, TimeUnit.MILLISECONDS, SynchronousQueue()) { r, _ -> TASK_PREPARE.add(r) }
+        POOL_TASK = ThreadPoolExecutor(mConfig.corePoolSize, mConfig.maxPoolSize, 30, TimeUnit.MILLISECONDS, SynchronousQueue()) { r, _ -> TASK_PREPARE.add(r) }
     }
 
     /**
      * 同步下载单个任务
      */
+    @Synchronized
     @JvmOverloads
     @JvmStatic
-    fun synDowload(info: TaskCellInfo, listener: IProgress? = null): Boolean {
+    fun synDownload(info: TaskCellInfo, listener: IProgress? = null): Boolean {
         return DownloadUtils.download(info, mConfig, listener)
     }
 
@@ -74,6 +71,7 @@ object DownloadManager {
      * @param taskInfo 下载任务
      * @param listener 下载状态监听
      */
+    @Synchronized
     @JvmOverloads
     @JvmStatic
     fun download(taskInfo: TaskInfo, listener: IStatusListener? = null) {
@@ -82,7 +80,7 @@ object DownloadManager {
             return
         }
 
-        mStatusList[taskInfo.key] = TaskStatusInfo(count.toLong(), listener)
+        mStatusList[taskInfo.key] = TaskStatusInfo(count, listener)
 
         for (cellInfo in taskInfo.taskList!!) {
             POOL_TASK.execute(DownloadTask(taskInfo.key, cellInfo, mConfig, cellTaskListener))

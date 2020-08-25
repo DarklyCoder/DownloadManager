@@ -39,6 +39,6 @@ interface IStatusListener {
      * @param successCount 成功个数
      * @param failCount    失败次数
      */
-    fun onTotalProgress(@FloatRange(from = 0.0, to = 1.0) progress: Float, count: Long, successCount: Long, failCount: Long)
+    fun onTotalProgress(@FloatRange(from = 0.0, to = 1.0) progress: Float, count: Int, successCount: Int, failCount: Int)
 
 }
